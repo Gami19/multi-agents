@@ -42,7 +42,8 @@ FastAPIとReactを使用したマルチエージェントAIシステム。AWS Be
 ### 前提条件
 
 - Python 3.8+
-- Node.js 18+
+- Node.js 22+
+- Vite  v7.1.7
 - AWS Bedrock APIキー
 - Azure OpenAI APIキー
 
