@@ -1,0 +1,357 @@
+###
+POST http://localhost:8001/aws_documentation/query
+Content-Type: application/json
+
+{
+  "query": "BedrockのClaude 3.7 SonnetのモデルIDは？"
+}
+
+### 
+
+###
+POST http://localhost:8001/arxiv/query
+Content-Type: application/json
+
+{
+  "query": "最近の不確定原理について教えて"
+}
+
+### 
+
+### 
+
+###
+# 新エージェントテスト - DuckDuckGo検索
+POST http://localhost:8001/duckduckgo/query
+Content-Type: application/json
+
+{
+  "query": "最新のWeb技術トレンドについて教えて"
+}
+
+### 
+
+###
+# 新エージェントテスト - HackerNews
+POST http://localhost:8001/hackernews/query
+Content-Type: application/json
+
+{
+  "query": "最近の技術話題について教えて"
+}
+
+###
+
+###
+# MCP Route Mode テスト
+POST http://localhost:8001/multi_agent/query
+Content-Type: application/json
+
+{
+  "query": "AWS BedrockとClaude 3.7 Sonnetについて教えて",
+  "multi_agent_mode": "route",
+  "agent_type": "mcp"
+}
+
+###
+
+###
+# MCP Coordinate Mode テスト
+POST http://localhost:8001/multi_agent/query
+Content-Type: application/json
+
+{
+  "query": "最新のAI研究とAWS Bedrockの技術について包括的に分析して",
+  "multi_agent_mode": "coordinate",
+  "agent_type": "mcp"
+}
+
+###
+
+###
+# MCP Collaborate Mode テスト
+POST http://localhost:8001/multi_agent/query
+Content-Type: application/json
+
+{
+  "query": "AI技術の最新動向について多角的に分析して",
+  "multi_agent_mode": "collaborate",
+  "agent_type": "mcp"
+}
+
+###
+
+###
+# 推論モード付きテスト
+POST http://localhost:8001/multi_agent/query
+Content-Type: application/json
+
+{
+  "query": "ChatGPTとClaudeの比較分析を行って",
+  "multi_agent_mode": "coordinate",
+  "agent_type": "mcp",
+  "reasoning_mode": true
+}
+
+###
+
+###
+# ヘルスチェック
+GET http://localhost:8001/health
+
+###
+
+###
+# チームモード情報取得
+GET http://localhost:8001/team/modes
+
+###
+
+###
+
+# ==========================================
+# Dynamic Original Agent & Team Tests
+# ==========================================
+
+###
+# 1. 利用可能オリジナルエージェントタイプ一覧取得
+GET http://localhost:8001/original_agents/available
+
+###
+
+### 
+# 2. Web Researcher オリジナルエージェント作成
+POST http://localhost:8001/original_agents/create
+Content-Type: application/json
+
+{
+  "agent_type": "web_researcher",
+  "name": "Custom Web Analyst",
+  "role": "カスタムWebアナリスト",
+  "instructions": "最新のウェブ情報を分析し、信頼性の高いソースから情報を収集します。"
+}
+
+###
+
+###
+# 3. Academic Researcher オリジナルエージェント作成
+POST http://localhost:8001/original_agents/create
+Content-Type: application/json
+
+{
+  "agent_type": "academic_researcher",
+  "name": "Custom Academic Analyst",
+  "role": "カスタム学術研究アナリスト"
+}
+
+###
+
+###
+# 4. Tech Analyst オリジナルエージェント作成
+POST http://localhost:8001/original_agents/create
+Content-Type: application/json
+
+{
+  "agent_type": "tech_analyst", 
+  "name": "Custom Tech Specialist",
+  "role": "カスタム技術スペシャリスト",
+  "instructions": "技術コミュニティの最新動向を追跡し、イノベーショントレンドを分析します。"
+}
+
+###
+
+### 
+# 5. 利用可能オリジナルチーム一覧取得
+GET http://localhost:8001/original_teams/available
+
+###
+
+### 
+# 6. Route Mode動的チーム作成（複数エージェント選択）
+POST http://localhost:8001/original_teams/create
+Content-Type: application/json
+
+{
+  "team_mode": "route",
+  "agent_selections": ["329e4614-6fe5-4eaf-a76a-942cbeb45d25", "a5d82ea7-62db-4df2-8003-820a410d5cd5", "68260655-4034-4081-bc08-1f04c6b9b2f7"],
+  "team_name": "Custom Route Analysis Team"
+}
+
+###
+
+### 
+# 7. Coordinate Mode動的チーム作成
+POST http://localhost:8001/original_teams/create
+Content-Type: application/json
+
+{
+  "team_mode": "coordinate",
+  "agent_selections": ["agent_id_1", "agent_id_3"],
+  "team_name": "Custom Coordinate Team",
+  "custom_instructions": [
+    "特定分野の深い分析を実行してください",
+    "信頼性の高い情報源に焦点を当ててください"
+  ]
+}
+
+###
+
+### 
+# 8. Collaborate Mode動的チーム作成（カスタム設定なし）
+POST http://localhost:8001/original_teams/create
+Content-Type: application/json
+
+{
+  "team_mode": "collaborate",
+  "agent_selections": ["agent_id_1", "agent_id_2", "agent_id_3"]
+}
+
+###
+
+### 
+# 9. 再取得 - 作成されたチーム一覧を確認
+GET http://localhost:8001/original_teams/available
+
+###
+
+### 
+# 10. 動的チームクエリ実行（正常ケース）
+POST http://localhost:8001/dynamic_team/query
+Content-Type: application/json
+
+{
+  "query": "最新のAI技術トレンドについて包括的に調査してください",
+  "team_key": "dynamic_team_f56c3842-3921-48e5-8de7-4ba525ce1b85",
+  "reasoning_mode": false
+}
+
+###
+
+### 
+# 11. 動的チームクエリ実行（推論モード）
+POST http://localhost:8001/dynamic_team/query
+Content-Type: application/json
+
+{
+  "query": "量子コンピューティングとブロックチェーンの統合可能性について分析してください", 
+  "team_key": "dynamic_team_created_id",
+  "reasoning_mode": true
+}
+
+###
+
+### 
+# 12. 使用していないチームの削除テスト
+DELETE http://localhost:8001/original_teams/dynamic_team_f56c3842-3921-48e5-8de7-4ba525ce1b85
+
+###
+
+### 
+# 13. チーム削除後の一覧取得（削除確認）
+GET http://localhost:8001/original_teams/available
+
+###
+
+### 
+# 14. エラーテスト - 存在しないチームでのクエリ
+POST http://localhost:8001/dynamic_team/query
+Content-Type: application/json
+
+{
+  "query": "テストクエリ",
+  "team_key": "non_existent_team_id",
+  "reasoning_mode": false
+}
+
+###
+
+### 
+# 15. エラーテスト - 無効なエージェントタイプ
+POST http://localhost:8001/original_agents/create
+Content-Type: application/json
+
+{
+  "agent_type": "invalid_agent_type",
+  "name": "Invalid Agent"
+}
+
+###
+
+### 
+# 16. エラーテスト - 存在しないエージェントでのチーム作成
+POST http://localhost:8001/original_teams/create
+Content-Type: application/json
+
+{
+  "team_mode": "route",
+  "agent_selections": ["non_existent_agent"],
+  "team_name": "Error Test Team"
+}
+
+###
+
+### 
+# 17. 最終ヘルスチェック（新機能確認）
+GET http://localhost:8001/health
+
+###
+
+# ==========================================
+# 完全カスタマイズ機能テスト
+# ==========================================
+
+###
+# 18. 利用可能ツール一覧取得
+GET http://localhost:8001/custom_agents/tools
+
+###
+
+### 
+# 19. 完全カスタマイズエージェント作成 - Web関連専門
+POST http://localhost:8001/custom_agents/create
+Content-Type: application/json
+
+{
+  "name": "Full-Stack Web Expert",
+  "role": "フルスタックWeb開発エキスパート",
+  "instructions": "最新のWeb技術全般について調査・回答します。ソースコードレビュー、技術トレンド分析、最適な開発手法の提案などを行います。",
+  "tools": ["duckduckgo", "hackernews"],
+  "custom_tools": []
+}
+
+###
+
+###
+# 20. 完全カスタマイズエージェント作成 - 研究専門
+POST http://localhost:8001/custom_agents/create
+Content-Type: application/json
+
+{
+  "name": "AI Research Expert",
+  "role": "AI研究と機械学習の専門家",
+  "instructions": "最新のAI研究や機械学習手法について詳しく分析します。論文調査、技術原理解析、実装手法提案を行います。",
+  "tools": ["arxiv", "duckduckgo", "reasoning"],
+  "custom_tools": []
+}
+
+###
+
+###
+# 21. テンプレートベースカスタマイズ（academic_researcherベース）
+POST http://localhost:8001/custom_agents/create
+Content-Type: application/json
+
+{
+  "name": "My Custom Academic Researcher",
+  "role": "My Research Specialist",
+  "instructions": "This is a specialized researcher focused on medicine and biomedical fields.",
+  "template": "academic_researcher",
+  "tools": [],
+  "custom_tools": []
+}
+
+###
+
+###
+# 最終ヘルスチェック（カスタマイズ機能確認）
+GET http://localhost:8001/health
