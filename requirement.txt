@@ -1,0 +1,13 @@
+agno
+azure-ai-inference 
+aioboto3
+boto3
+openai
+brave-search
+arxiv
+mcp
+httpx
+ddgs
+yfinance
+reasoning 
+pypdf
