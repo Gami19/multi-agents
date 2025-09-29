@@ -1,4 +1,4 @@
-# FastAPI Multi-Agents
+#　 FastAPI Multi-Agents
 
 FastAPIとReactを使用したマルチエージェントAIシステム。AWS Bedrock、Azure OpenAI、ArXiv、Brave Searchなどの複数のAIサービスとツールを統合。
 
